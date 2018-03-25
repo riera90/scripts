@@ -54,6 +54,7 @@ else
 	  b=1
 	fi
 
+
 fi
 # echo $1
 # xrandr --output LVDS-1 --brightness "$1"
