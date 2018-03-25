@@ -24,9 +24,9 @@ fi
 printf "\n Gloval configuration:\n"
 if [[ ${#} -gt "3" ]]; then
 	printf "\tSetting custom filter..."
-	r=$(clac $2 / $top_value)
-	g=$(clac $3 / $top_value)
-	b=$(clac $4 / $top_value)
+	r=$(calc $2 / $top_value)
+	g=$(calc $3 / $top_value)
+	b=$(calc $4 / $top_value)
 	printf " done.\n"
 	if [[ "$debug" == "1" ]]; then
 		echo "custom rgb"
