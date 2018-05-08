@@ -1,3 +1,5 @@
 #!/bin/bash
+echo "running docker daemon"
 sudo systemctl start docker.socket
-sudo docker run --name=ManageYourAirport --rm -it --net=host -v $(pwd):/ManageYourAirport riera90/symfony-dev
+echo "launching docker"
+sudo docker run --name=SynfonyApplication --rm -it --net=host -v $(pwd):/application riera90/symfony-dev
