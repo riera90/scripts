@@ -1,7 +1,7 @@
 # sys admin / admin scripts
 
-| name           	 	 		| description                                        | dependencies                                    |
-| ----------------			| -------------------------------------------------- | ----------------------------------------------- |
-| **bgd.sh**       			| manipulate the screen brightness and color         | *Arbitrary precision console calculator (calc)* |
-| **dockerize.sh**      | dockerizes a symfony project (ubuntu based docker) | *docker*                                        |
-| **latex_reflresh.sh** | Latex auto compiler                                | *tex*                                           |
+| name | description | dependencies |
+| ---- | ----------- | ------------ |
+| **bgd.sh** | manipulate the screen brightness and color | *Arbitrary precision console calculator (calc)* |
+| **latex_reflresh.sh** | Latex auto builder | *tex* |
+| **symfony_login_password_tester.py** | symfony password tester | *python3 and libs* |
