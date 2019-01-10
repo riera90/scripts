@@ -5,7 +5,7 @@
 # licenced under BSD 3-Clause License
 # date 10/01/19
 
-# Intended to use in symfony websites, tested in version 4
+# Intended to use on symfony websites, tested in version 4
 
 
 import requests
