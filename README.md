@@ -1,4 +1,4 @@
-# sys admin / admin scripts
+# scripts
 
 | name | description | dependencies |
 | ---- | ----------- | ------------ |
