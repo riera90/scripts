@@ -77,10 +77,10 @@ def get_first_class_at(day):
     horario = horario[actual_day]
     min_class = None
     for clas in horario:
-    if min_class is None:
-    min_class = datetime.strptime(clas, "%H:%M:%S").time()
-    if (datetime.strptime(clas, "%H:%M:%S").time() < min_class):
-    min_class = datetime.strptime(clas, "%X").time()
+        if min_class is None:
+            min_class = datetime.strptime(clas, "%H:%M:%S").time()
+        if (datetime.strptime(clas, "%H:%M:%S").time() < min_class):
+            min_class = datetime.strptime(clas, "%X").time()
 
     return min_class
 
@@ -91,20 +91,20 @@ def calculate_train(class_time):
     trains = json.load(trains)['Cordoba-Rabanales']
 
     if (int(datetime.today().weekday()) < 5):
-    trains = trains['entreSemana']
+        trains = trains['entreSemana']
     else:
-    trains = trains['finDeSemana']
+        trains = trains['finDeSemana']
 
     delta = time_from_station_to_station + time_from_Station_to_class
     latest_train_ok = None
     for train in trains:
-    train = datetime.strptime(train, "%H:%M:%S").time()
-    if latest_train_ok is None:
-    if class_time >= time_plus(train, delta):
-    latest_train_ok = train
-    if (train > latest_train_ok):
-    if class_time >= time_plus(train, delta):
-    latest_train_ok = train
+        train = datetime.strptime(train, "%H:%M:%S").time()
+        if latest_train_ok is None:
+            if class_time >= time_plus(train, delta):
+                latest_train_ok = train
+        if (train > latest_train_ok):
+            if class_time >= time_plus(train, delta):
+                latest_train_ok = train
     return latest_train_ok
 
 
@@ -130,23 +130,23 @@ def ring_alarm(sound, timeout):
     mixer.music.load(sound)
     mixer.music.play()
     while( (max_time > datetime.now().time()) and (ringing) ):
-    #ringing=False
-    #ret_val=True
-    time.sleep(0.1)
-    if GPIO.input(8) == GPIO.HIGH:
-    ringing = False
-    i = 0
-    while GPIO.input(8) == GPIO.HIGH:
-    i = i + 1
-    time.sleep(0.1)
-    if i > 15:
-    ret_val = True
+        #ringing=False
+        #ret_val=True
+        time.sleep(0.1)
+        if GPIO.input(8) == GPIO.HIGH:
+            ringing = False
+            i = 0
+            while GPIO.input(8) == GPIO.HIGH:
+                i = i + 1
+                time.sleep(0.1)
+            if i > 15:
+                ret_val = True
 
     mixer.music.stop()
     if ret_val:
-    print("stoping")
+        print("stoping")
     else:
-    print("pausing")
+        print("pausing")
     return ret_val
 
 
@@ -180,77 +180,77 @@ def main():
             print(alarm_status, actual_time,"untill",next_alarm)
 
             if alarm_status is "disarmed":
-            time.sleep(60)
+                time.sleep(60)
             else:
-            time.sleep(1)
+                time.sleep(1)
 
 
             actual_time = datetime.now().time()
 
 
             if alarm_status is "armed":#the alarm is ready for fucking up your sleep
-            if(actual_time > first_alarm_time):#woops is fking ur sleep already!
-            print("get up lazy")
-            #not enought time to ring alarm
-            if(wake_up_time < time_plus(actual_time,repeat_alarm_after)):
-            delta = timedelta(minutes=wake_up_time.minute-actual_time.minute)
-            print("ringing shorter alarm!")
-            ring_alarm('sound.flac', delta)
-            alarm_status = "waking_up"
-            next_alarm = wake_up_time
+                if(actual_time > first_alarm_time):#woops is fking ur sleep already!
+                    print("get up lazy")
+                    #not enought time to ring alarm
+                    if(wake_up_time < time_plus(actual_time,repeat_alarm_after)):
+                        delta = timedelta(minutes=wake_up_time.minute-actual_time.minute)
+                        print("ringing shorter alarm!")
+                        ring_alarm('sound.flac', delta)
+                        alarm_status = "waking_up"
+                        next_alarm = wake_up_time
 
-            else:#ring the alarm
-            print("ringing alarm!")
-            if (ring_alarm('bittersweet.mp3', repeat_alarm_after)):
-            alarm_status = "waking_up"
-            next_alarm = wake_up_time
-            else:
-            if(wake_up_time > time_plus(actual_time,repeat_alarm_after)):
-            print("waiting")
-            time.sleep(snooze_time)
+                    else:#ring the alarm
+                        print("ringing alarm!")
+                        if (ring_alarm('bittersweet.mp3', repeat_alarm_after)):
+                            alarm_status = "waking_up"
+                            next_alarm = wake_up_time
+                        else:
+                            if(wake_up_time > time_plus(actual_time,repeat_alarm_after)):
+                                print("waiting")
+                                time.sleep(snooze_time)
 
 
 
 
             elif alarm_status is "waking_up":#currently fucking up your sleep
-            if(actual_time > wake_up_time):
-            print("ok, now you have to get up")
-            #not enought time to ring alarm
-            if(go_out_time < time_plus(actual_time,repeat_alarm_after)):
-            delta = timedelta(minutes=wake_up_time.minute-actual_time.minute)
-            print("ringing shorter alarm!")
-            ring_alarm('sound.flac', delta)
-            alarm_status = "preparing"
-            next_alarm = go_out_time
+                if(actual_time > wake_up_time):
+                    print("ok, now you have to get up")
+                    #not enought time to ring alarm
+                    if(go_out_time < time_plus(actual_time,repeat_alarm_after)):
+                        delta = timedelta(minutes=wake_up_time.minute-actual_time.minute)
+                        print("ringing shorter alarm!")
+                        ring_alarm('sound.flac', delta)
+                        alarm_status = "preparing"
+                        next_alarm = go_out_time
 
-            else:#ring the alarm
-            print("ringing alarm!")
-            if (ring_alarm('ricky.mp3', repeat_alarm_after)):
-            alarm_status = "preparing"
-            next_alarm = go_out_time
-            else:
-            if(go_out_time > time_plus(actual_time,repeat_alarm_after)):
-            print("waiting")
-            time.sleep(snooze_time)
+                else:#ring the alarm
+                    print("ringing alarm!")
+                    if (ring_alarm('ricky.mp3', repeat_alarm_after)):
+                        alarm_status = "preparing"
+                        next_alarm = go_out_time
+                    else:
+                        if(go_out_time > time_plus(actual_time,repeat_alarm_after)):
+                            print("waiting")
+                            time.sleep(snooze_time)
 
 
 
 
             elif alarm_status is "preparing":#fucking up your coffee
-            if(actual_time > go_out_time):
-            print("you beter be prepared")
-            print("ringing alarm!")
-            ring_alarm('hector.mp3', timedelta(seconds=5))
-            alarm_status = "disarmed"
+                if(actual_time > go_out_time):
+                    print("you beter be prepared")
+                    print("ringing alarm!")
+                    ring_alarm('hector.mp3', timedelta(seconds=5))
+                    alarm_status = "disarmed"
 
 
 
             elif alarm_status is "disarmed":#your sleep has been fckd up succesfully
-            if today is not datetime.today().weekday():
-            print("reseting alarm")
-            today = datetime.today().weekday()
-            train = calculate_train(get_first_class_at(int(datetime.today().weekday())))
-            alarm_status = "armed"
+                if today is not datetime.today().weekday():
+                    print("reseting alarm")
+                    today = datetime.today().weekday()
+                    train = calculate_train(get_first_class_at(int(datetime.today().weekday())))
+                    alarm_status = "armed"
 
     except Exception as e:
         print("za jodiho pacoh",e)
