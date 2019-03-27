@@ -21,7 +21,7 @@ import os
 ################################################################################
 number_of_threads = 500
 # target login
-target = "http://www.seleccioncadete18.com"
+target = "http://www.site.com"
 # target username and password input
 ################################################################################
 ########################### end of Configuration ###############################
